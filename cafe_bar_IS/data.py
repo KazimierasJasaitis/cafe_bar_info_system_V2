@@ -2,17 +2,17 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
     if session.query(User).count() == 0:
         initial_users = [
             {
-                "username": "john",
+                "username": "jonas1998",
                 "password": "password123",
-                "email": "john@example.com",
+                "email": "jonaszirnys@gmail.com",
                 "role": "admin",
                 "managed_cafe_id": None,
-                "reputation_index": 10,
+                "reputation_index": 100,
             },
             {
-                "username": "jane",
-                "password": "password456",
-                "email": "jane@example.com",
+                "username": "xxxjurgitaxxx",
+                "password": "katinas123",
+                "email": "jurgita@yahoo.com",
                 "role": "user",
                 "managed_cafe_id": None,
                 "reputation_index": 5,
@@ -31,7 +31,7 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
                 "open_hours": "08:00-17:00",
                 "type": "cafe",
                 "seats": 18,
-                "user_id": "john"
+                "user_id": "jonas1998",
             },
             {
                 "name": "Local pub",
@@ -39,7 +39,7 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
                 "open_hours": "16:00-00:00",
                 "type": "bar",
                 "seats": 25,
-                "user_id": "jane"
+                "user_id": "jonas1998",
             },
             {
                 "name": "Lola",
@@ -47,7 +47,7 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
                 "open_hours": "8:00-18:00",
                 "type": "cafe",
                 "seats": 40,
-                "user_id": "john"
+                "user_id": "jonas1998",
             },
         ]
 
@@ -59,14 +59,14 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
         initial_seat_statuses = [
             {
                 "bar_cafe_id": 1,
-                "user_id": "john",
+                "user_id": "jonas1998",
                 "status": "occupied",
                 "timestamp": "2023-05-01T10:00:00",
             },
             {
                 "bar_cafe_id": 2,
-                "user_id": "jane",
-                "status": "vacant",
+                "user_id": "xxxjurgitaxxx",
+                "status": "empty",
                 "timestamp": "2023-05-01T11:00:00",
             },
         ]
@@ -78,12 +78,12 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
     if session.query(KarmaLog).count() == 0:
         initial_karma_logs = [
             {
-                "user_id": "john",
+                "user_id": "jonas1998",
                 "karma_points": 5,
                 "timestamp": "2023-05-01T12:00:00",
             },
             {
-                "user_id": "jane",
+                "user_id": "xxxjurgitaxxx",
                 "karma_points": -3,
                 "timestamp": "2023-05-01T13:00:00",
             },
@@ -94,4 +94,3 @@ def populate_initial_data(session, User, BarCafe, SeatStatus, KarmaLog):
             session.add(karma_log)
 
     session.commit()
-
