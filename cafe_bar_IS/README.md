@@ -2,7 +2,7 @@
 
 ## How to run
 
-git clone https://github.com/KazimierasJasaitis/cafe_bar_IS.git
+git clone https://github.com/KazimierasJasaitis/cafe_bar_info_system_V2.git
 cd cafe_bar_IS
 make
 
@@ -38,3 +38,9 @@ make
 - `GET /karma_log/<id>`: Get a specific karma log by ID.
 - `PUT /karma_log/<id>`: Update a karma log by ID.
 - `DELETE /karma_log/<id>`: Delete a karma log by ID.
+
+###
+
+- `POST /bar_cafe/<id>/menu`: Create a new dish for the menu of the cafe specified by ID.
+- `GET /bar_cafe/<id>/menu`: Get the menu for the cafe specified by ID.
+- `GET /dishes`: Get all available dishes.
