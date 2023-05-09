@@ -1,13 +1,12 @@
 # Cafe and Bar Information System
+
 ## How to run
-- `git clone https://github.com/KazimierasJasaitis/cafe_bar_IS.git`
-- `cd cafe_bar_IS`
-### Option I
-- `make`
-### Option II
-- `docker build -t cafe_bar_info_system .`
-- `docker run -d -p 5000:5000 --name cafe_bar_info_system cafe_bar_info_system`
-## API Endpoints
+
+- `git clone https://github.com/KazimierasJasaitis/cafe_bar_info_system_V2.git`
+- `cd cafe_bar_info_system_V2`
+- `docker-compose up`
+
+## API Endpoints available on port 80
 ### Users
 
 - `POST /user`: Create a new user.
@@ -39,3 +38,9 @@
 - `GET /karma_log/<id>`: Get a specific karma log by ID.
 - `PUT /karma_log/<id>`: Update a karma log by ID.
 - `DELETE /karma_log/<id>`: Delete a karma log by ID.
+
+###
+
+- `POST /bar_cafe/<id>/menu`: Create a new dish for the menu of the cafe specified by ID.
+- `GET /bar_cafe/<id>/menu`: Get the menu for the cafe specified by ID.
+- `GET /dishes`: Get all available dishes.
