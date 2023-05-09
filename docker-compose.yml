@@ -1,0 +1,57 @@
+version: '2.4'
+services:
+    menu_db:
+        container_name: menu_db
+        image: mysql:5.7
+        # ports:
+        #     - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 4s
+            retries: 60
+        volumes:
+            - ./menu-service/menu_service_db:/var/lib/mysql
+    service:
+        container_name: menu_service
+        links:
+            - menu_db
+        depends_on:
+            menu_db:
+                condition: service_healthy
+        build: ./menu-service
+        ports:
+            - "5000:5000"
+    db:
+        container_name: library_db
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        environment:
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: "securePassw0rd"
+            MSSQL_PID: "Express"
+        # ports:
+        #     - "1433:1433"
+        healthcheck:
+            test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" || exit 1
+            interval: 10s
+            timeout: 3s
+            retries: 10
+            start_period: 10s
+    library:
+        container_name: library_service
+        build: ./menu-service/LibraryWebService
+        # ports:
+        #     - "5001:80"
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - default
+    cafe_bar_info_system:
+        container_name: cafe_bar_info_system
+        build: ./cafe_bar_IS
+        ports:
+            - "80:80"
+volumes:
+    menu_service_db:

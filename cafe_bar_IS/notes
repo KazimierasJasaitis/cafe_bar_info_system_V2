@@ -1,0 +1,21 @@
+sudo docker build -t cafe_bar_info_system .
+sudo docker run -d -p 5000:5000 --name cafe_bar_info_system cafe_bar_info_system
+http://localhost:5000
+
+git clone https://github.com/Piratux/menu-service.git
+
+
+kaja7807@kaja7807-ThinkPad-S1-Yoga-12:~/Desktop/WebSer/cafe_bar_info_system_V2$ docker-compose up
+ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a supported version (e.g "2.2" or "3.3") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.
+For more on the Compose file format versions, see https://docs.docker.com/compose/compose-file/
+
+
+
+docker-compose up
+ERROR: The Compose file './docker-compose.yml' is invalid because:
+Unsupported config option for services: 'cafe_bar_info_system'
+
+
+docker-compose --version
+docker-compose version 1.25.0, build unknown
+
