@@ -1,4 +1,0 @@
-sudo docker build -t cafe_bar_info_system .
-sudo docker run -d -p 5000:5000 --name cafe_bar_info_system cafe_bar_info_system
-http://localhost:5000
-
