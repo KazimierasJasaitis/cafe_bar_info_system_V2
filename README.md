@@ -44,3 +44,15 @@
 - `POST /bar_cafe/<id>/menu`: Create a new dish for the menu of the cafe specified by ID.
 - `GET /bar_cafe/<id>/menu`: Get the menu for the cafe specified by ID.
 - `GET /dishes`: Get all available dishes.
+
+`{
+    "price": 12.15,
+    "name": "burgir",
+    "image_link": "http://myimagestorage.com/overpriced_burger.png",
+    "cooking_time": "0:15:00",
+    "author": {
+        "name": "Bob",
+        "surname": "Bobson"
+    }
+}`
+
