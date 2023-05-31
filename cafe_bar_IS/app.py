@@ -10,12 +10,30 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.exc import IntegrityError
 from flask import url_for
 
+#####################SWAGGER
+from flask_swagger_ui import get_swaggerui_blueprint
+
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cafe_bar_info_system.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+
+SWAGGER_URL = '/api/docs' 
+API_YAML_URL = '/static/swagger.yaml' 
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_YAML_URL,
+    config={
+        'app_name': "BAR_CAFE_IS"
+    }
+)
+
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+######################SWAGGER
 
 menu_service_url = "http://menu_service:5000"
 
@@ -233,9 +251,29 @@ def get_bar_cafe(id):
         bar_cafe = BarCafe.query.get(id)
         if not bar_cafe:
             return jsonify({"error": "Item not found"}), 404
-        return bar_cafe_schema.jsonify(bar_cafe)
+
+        # Get the list of dish ids for this cafe
+        dish_relations = db.session.query(bar_cafe_menu).filter_by(bar_cafe_id=id).all()
+        dish_ids = [relation.dish_id for relation in dish_relations]
+        
+        # Get dish data for those ids from the menu-service
+        cafe_menu = []
+        for dish_id in dish_ids:
+            response = requests.get(f"{menu_service_url}/dishes/{dish_id}")
+            response.raise_for_status()
+            cafe_menu.append(response.json())
+        
+        # Add the menu to the bar_cafe data
+        bar_cafe_data = bar_cafe_schema.dump(bar_cafe)
+        bar_cafe_data['menu'] = cafe_menu
+
+        return jsonify(bar_cafe_data)
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "An error occurred while fetching dishes from the menu-service."}), 500
     except Exception as e:
         return jsonify({"error": "An error occurred while fetching the item."}), 500
+
+
 
 @app.route("/bar_cafe/<id>", methods=["PUT"])
 def update_bar_cafe(id):

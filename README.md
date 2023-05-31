@@ -2,9 +2,9 @@
 
 ## How to run
 
-- `git clone https://github.com/KazimierasJasaitis/cafe_bar_info_system_V2.git`
+- `git clone --recurse-submodules https://github.com/KazimierasJasaitis/cafe_bar_info_system_V2.git`
 - `cd cafe_bar_info_system_V2`
-- `docker-compose up`
+- `docker-compose up --build -d`
 
 ## API Endpoints available on port 80
 ### Users

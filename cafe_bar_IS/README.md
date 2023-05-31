@@ -2,11 +2,11 @@
 
 ## How to run
 
-git clone https://github.com/KazimierasJasaitis/cafe_bar_info_system_V2.git
-cd cafe_bar_IS
-make
+- `git clone https://github.com/KazimierasJasaitis/cafe_bar_info_system_V2.git`
+- `cd cafe_bar_info_system_V2`
+- `docker-compose up`
 
-## API Endpoints
+## API Endpoints available on port 80
 ### Users
 
 - `POST /user`: Create a new user.
