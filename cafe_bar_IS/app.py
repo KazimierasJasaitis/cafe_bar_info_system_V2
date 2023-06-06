@@ -247,11 +247,11 @@ def get_all_bar_cafes():
 
 @app.route("/bar_cafe/<id>", methods=["GET"])
 def get_bar_cafe(id):
-    try:
-        bar_cafe = BarCafe.query.get(id)
-        if not bar_cafe:
-            return jsonify({"error": "Item not found"}), 404
+    bar_cafe = BarCafe.query.get(id)
+    if not bar_cafe:
+        return jsonify({"error": "Item not found"}), 404
 
+    try:
         # Get the list of dish ids for this cafe
         dish_relations = db.session.query(bar_cafe_menu).filter_by(bar_cafe_id=id).all()
         dish_ids = [relation.dish_id for relation in dish_relations]
@@ -263,15 +263,17 @@ def get_bar_cafe(id):
             response.raise_for_status()
             cafe_menu.append(response.json())
         
-        # Add the menu to the bar_cafe data
-        bar_cafe_data = bar_cafe_schema.dump(bar_cafe)
-        bar_cafe_data['menu'] = cafe_menu
-
-        return jsonify(bar_cafe_data)
     except requests.exceptions.RequestException as e:
-        return jsonify({"error": "An error occurred while fetching dishes from the menu-service."}), 500
+        cafe_menu = []
     except Exception as e:
         return jsonify({"error": "An error occurred while fetching the item."}), 500
+
+    # Add the menu to the bar_cafe data
+    bar_cafe_data = bar_cafe_schema.dump(bar_cafe)
+    bar_cafe_data['menu'] = cafe_menu
+
+    return jsonify(bar_cafe_data)
+
 
 
 
